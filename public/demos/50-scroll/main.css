@@ -64,7 +64,6 @@ body {
     --inline-offset: 1rem;
 
     position: absolute;
-    inset-block-end: calc(anchor(center));
 
     display: grid;
     place-items: center;
@@ -155,7 +154,7 @@ body {
         box-shadow 0.6s var(--ease-in-out-3);
 }
 
-/* everything else recedes — gently */
+/* everything else recedes gently */
 @container snap-container not scroll-state(snapped: inline) {
     .section-content {
         translate: 0 2rem;

@@ -1,30 +1,136 @@
 @import url('https://unpkg.com/open-props@1.7.23/open-props.min.css');
 @import url('https://unpkg.com/open-props@1.7.23/normalize.min.css');
 
+:root {
+    color-scheme: dark;
+    --accent: var(--lime-3);
+}
+
+body {
+    margin: 0;
+    background: var(--gray-12);
+}
+
 .container {
     display: flex;
+    flex-direction: column;
+    gap: var(--size-4);
+
     inline-size: min(100%, 60rem);
     block-size: min(80svh, 30rem);
 
     margin-inline: auto;
 }
 
+/* ---------- radio controls (pure CSS, no JS) ---------- */
+
+.controls-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--size-2) var(--size-3);
+
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: var(--size-1);
+}
+
+.controls__label {
+    color: var(--gray-5);
+}
+
+.segmented {
+    display: inline-flex;
+    gap: 2px;
+
+    padding: 2px;
+
+    background: var(--gray-11);
+    border: 1px solid var(--gray-9);
+    border-radius: var(--radius-round);
+}
+
+.segmented__option {
+    position: relative;
+
+    padding: 0.2em 0.6em;
+
+    color: var(--gray-3);
+    cursor: pointer;
+    user-select: none;
+
+    border-radius: var(--radius-round);
+
+    transition:
+        background 0.2s var(--ease-out-3),
+        color 0.2s var(--ease-out-3);
+}
+
+/* the native radio covers the pill so the whole thing is clickable */
+.segmented__option input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.segmented__option:has(input:checked) {
+    background: var(--accent);
+    color: var(--gray-12);
+    font-weight: var(--font-weight-7);
+}
+
+.segmented__option:has(input:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* ---------- carousel ---------- */
+
 .carousel {
+    flex: 1;
+    min-block-size: 0;
     inline-size: 100%;
-    block-size: 100%;
-    background: var(--indigo-1);
+    background: var(--gray-12);
 }
 
 .carousel__slides {
     block-size: 100%;
     inline-size: 100%;
-    
+
     display: flex;
-    
-    gap: var(--size-2);
-    
+
+    gap: var(--size-3);
+
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+
+    /* NB: no scrollbar-width/scrollbar-color here on purpose — setting them
+       makes Chrome ignore ::-webkit-scrollbar and fall back to a thin
+       auto-hiding overlay bar. Webkit styling alone forces a classic,
+       always-visible scrollbar that reserves space. */
+}
+
+.carousel__slides::-webkit-scrollbar {
+    height: 0.6rem;
+}
+
+.carousel__slides::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: var(--radius-round);
+    min-width: 2rem;
+}
+
+.carousel__slides::-webkit-scrollbar-track {
+    background: var(--gray-11);
+    border-radius: var(--radius-round);
 }
 
 .slide {
@@ -37,8 +143,33 @@
 
     scroll-snap-align: start;
 
-    background: Var(--indigo-2);
+    border-radius: var(--radius-4);
+    border: 1px solid oklch(from var(--accent) calc(l * 0.5) c h);
+    background: oklch(from var(--accent) calc(l * 0.28) c h);
 
-    color: var(--gray-10);
+    color: var(--accent);
     font-size: var(--font-size-fluid-2);
+    font-weight: var(--font-weight-8);
+}
+
+/* the radios drive scroll-snap-align — no JavaScript */
+.container:has(input[value="start"]:checked) .slide {
+    scroll-snap-align: start;
+}
+
+.container:has(input[value="center"]:checked) .slide {
+    scroll-snap-align: center;
+}
+
+.container:has(input[value="end"]:checked) .slide {
+    scroll-snap-align: end;
+}
+
+/* the radios drive scroll-snap-type too — still no JavaScript */
+.container:has(input[value="mandatory"]:checked) .carousel__slides {
+    scroll-snap-type: x mandatory;
+}
+
+.container:has(input[value="proximity"]:checked) .carousel__slides {
+    scroll-snap-type: x proximity;
 }

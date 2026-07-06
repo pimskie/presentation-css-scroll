@@ -8,9 +8,8 @@ layout: cover
 
 # Scroll? Snap!
 
-CSS-only carousels met `::scroll-button`, `::scroll-marker` en `scroll-state()`
+CSS-only carousels met: <br /> `::scroll-button`, `::scroll-marker` en `scroll-state()`
 
-<div class="kicker">FE Meeting · Harborn</div>
 
 <!--
 Native carousels in de browser. Vijf demo's, van basis snap tot scroll-state containers. Nul regels JavaScript.
@@ -18,19 +17,13 @@ Native carousels in de browser. Vijf demo's, van basis snap tot scroll-state con
 
 ---
 
-# Elke carousel begint hetzelfde
+# Waarom
 
-`npm install swiper` — en dan:
-
-- **~40 kB** JavaScript voor iets dat scrollt
-- Breakpoints en opties configureren in JS in plaats van CSS
-- Zelf keyboard-navigatie en focus regelen
-- Zelf ARIA erop plakken en hopen dat het klopt
-- Resize observers, re-inits, race conditions
-
-<hr>
-
-De browser kan dit inmiddels **zelf**. Alles wat je vandaag ziet is **0 regels JavaScript**.
+- Omdat het cool is en omdat het (bijna) kan
+- Geen **~40 kB** JavaScript voor iets dat scrollt
+- A11Y out of the box
+- Keyboard en focus navigatie
+- Geen resize observers, re-inits of gekke dingen nodig
 
 <!--
 Herkenbaar: elke library lost hetzelfde op — scroll-positie bijhouden, knoppen, dots, active state. Dat is precies wat de browser nu native doet.
@@ -38,15 +31,14 @@ Herkenbaar: elke library lost hetzelfde op — scroll-positie bijhouden, knoppen
 
 ---
 
-# Het menu
+# De onderdelen
 
-1. `scroll-snap` — de basis die al overal werkt
-2. `::scroll-button()` — gratis prev/next knoppen
-3. `::scroll-marker` — gratis dots met active state
-4. Markers ≠ dots — fullpage navigatie met `attr()` en anchors
-5. `scroll-state()` — reageren op snap & scroll, in CSS
+1. `scroll-snap`: "snappen" naar een element
+2. `::scroll-button()`: de vorige / volgende _buttons_
+3. `::scroll-marker`: slide markers met active state
+5. `scroll-state()`: reageren op wat de scroll status is
 
-Alle demo's staan in m'n [experiments repo](https://github.com/pimskie/experiments) — spelen mag.
+Alle demo's staan in m'n [experiments repo](https://github.com/pimskie/experiments/tree/main/css-stuff/carousel).
 
 ---
 layout: section
@@ -56,14 +48,14 @@ layout: section
 
 # Snap
 
-De basis — werkt al jaren, in elke browser
+De basis: werkt al jaren, in elke browser
 
 ---
 
-# Een scroller wordt een carousel
+# Make it snappy
 
 ```css {2-3|5|10|all}
-.carousel__slides {
+.carousel {
   display: flex;
   overflow-x: scroll;
 
@@ -76,7 +68,8 @@ De basis — werkt al jaren, in elke browser
 }
 ```
 
-**Dat is alles.** De scroller bepaalt de as en hoe streng (`mandatory` vs `proximity`), de slides bepalen wáár ze snappen (`start`, `center`, `end`).
+**Dat is alles.**  <br />
+Container: bepaalt manier (`mandatory` vs `proximity`) <br /> Slides: bepalen wáár ze snappen (`start`, `center`, `end`).
 
 <!--
 Klik 1: gewoon een flexbox met overflow. Klik 2: snap-type op de container. Klik 3: snap-align op de kinderen. Meer is het niet.
@@ -99,30 +92,28 @@ layout: section
 
 # `::scroll-button()`
 
-Prev/next zonder event listeners
+Vorige / vorige, zonder event listeners en werkt out of the box
 
 ---
 
 # Knoppen uit het niets
 
-```css {1-4|6-7|9-12|14-16|all}
-.carousel__slides::scroll-button(inline-start) {
-  content: '⬅';
-  grid-area: prev;
+```css 
+.carousel::scroll-button(inline-start) {
+  content: '⬅️';
 }
 
-.carousel__slides::scroll-button(inline-end) {
-  content: '⬅';
-  rotate: 180deg;
+.carousel::scroll-button(inline-end) {
+  content: '➡️';
 }
 
-.carousel__slides::scroll-button(*) {
+.carousel::scroll-button(*) {
   width: 3rem;
   aspect-ratio: 1;
   border-radius: 100%;
 }
 
-.carousel__slides::scroll-button(*):enabled:hover {
+.carousel::scroll-button(*):enabled:hover {
   scale: 1.05;
 }
 ```
@@ -133,12 +124,11 @@ Pseudo-elementen op de scroller, met content erin. Het zijn ECHTE buttons: klik 
 
 ---
 
-# Wat je er gratis bij krijgt
+# Gratis, G..R..A..
 
 - Het zijn **echte `<button>`-elementen** in de accessibility tree
-- Automatisch `:disabled` aan het begin en einde — style het met `:enabled` / `:disabled`
-- Eén klik scrollt ~85% van de scrollport, met `scroll-behavior: smooth`
-- Positioneren doe je gewoon met **grid**: `grid-template-areas: "prev slides next"`
+- Automatisch `:disabled` aan het begin en einde, te stylen met `:enabled` / `:disabled`
+- Positioneren? `grid` of fancy met [Anchor Position](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/position-anchor) / [Position Area](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/position-area) 
 
 ```css
 .carousel {
@@ -147,6 +137,15 @@ Pseudo-elementen op de scroller, met content erin. Het zijn ECHTE buttons: klik 
   grid-template-columns: 5rem 1fr 5rem;
 }
 ```
+
+```css
+.carousel::scroll-button(inline-start) {
+ position-anchor: --carousel;
+ position-area: inline-start;
+}
+
+```
+
 
 ---
 layout: iframe-unscaled
@@ -165,14 +164,14 @@ layout: section
 
 # `::scroll-marker`
 
-Dots met active state — zonder state
+Dots met active state
 
 ---
 
 # Eén property, één pseudo
 
 ```css {1-3|5-10|12-14|all}
-.carousel__slides {
+.carousel {
   scroll-marker-group: after;
 }
 
@@ -188,7 +187,7 @@ Dots met active state — zonder state
 }
 ```
 
-`scroll-marker-group: after` maakt de container, elke slide levert z'n eigen marker, en `:target-current` matcht de dot van de slide die nu in beeld is.
+`scroll-marker-group: after` maakt de container, elke slide levert z'n eigen marker en `:target-current` matcht de dot van de slide die nu in beeld is.
 
 <!--
 Markers gedragen zich als anchor-links naar hun slide. :target-current is de "active dot" waar je normaal een IntersectionObserver voor schrijft.
@@ -209,9 +208,7 @@ layout: section
 
 <div class="kicker">Deel 04</div>
 
-# Markers ≠ dots
-
-Het is een pseudo-element — dus alles mag
+# One pager carousel
 
 ---
 
@@ -237,7 +234,7 @@ Het is een pseudo-element — dus alles mag
 }
 ```
 
-`content: attr(data-title)` maakt van elke marker een tekstlabel, **anchor positioning** pint de group bovenaan de scroller, `:target-current` markeert waar je bent, en `:target-before` weet welke secties je al voorbij bent.
+`content: attr(data-title)` maakt van elke marker een tekstlabel, **anchor positioning** pint de group bovenaan de scroller, `:target-current` markeert waar je bent en `:target-before` weet welke secties je al voorbij bent.
 
 <!--
 Zelfde primitieven, totaal andere UI: een fullpage-scroller met sticky navigatie. :target-before/:target-after — je weet in CSS waar je bent in het verhaal.
@@ -315,15 +312,6 @@ DEMO: scroll — content van de gesnapte slide komt omhoog, de rest ligt verzonk
 Firefox en Safari hebben publiekelijk interesse getoond; het zit in de CSS Overflow spec. Voor productie: prima als enhancement, JS-fallback alleen als knoppen/dots kritisch zijn.
 -->
 
----
-layout: quote
----
-
-## Cash rules everything around me, maar scroll-snap rules de carousel.
-
-Method Man, waarschijnlijk
-
----
 
 # Bronnen
 
@@ -337,6 +325,6 @@ Method Man, waarschijnlijk
 layout: section
 ---
 
-# Protect ya carousel
+# Bedankt!
 
-Vragen? De demo's staan klaar om mee te spelen 🐝
+Vragen?

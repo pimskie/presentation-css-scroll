@@ -1,10 +1,20 @@
 @import url('https://unpkg.com/open-props@1.7.23/open-props.min.css');
 @import url('https://unpkg.com/open-props@1.7.23/normalize.min.css');
 
+:root {
+    color-scheme: dark;
+    --accent: var(--lime-3);
+}
+
+body {
+    margin: 0;
+    background: var(--gray-12);
+}
+
 .container {
     display: flex;
     inline-size: min(100%, 60rem);
-    block-size: min(80svh, 30rem);
+    block-size: min(80svh, 60rem);
 
     margin-inline: auto;
 }
@@ -14,10 +24,12 @@
     block-size: 100%;
 
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
         "prev slides next"
         ". markers .";
     grid-template-columns: 5rem 1fr 5rem;
+    grid-template-rows: 1fr auto;
+
 }
 
 .carousel__slides {
@@ -26,54 +38,87 @@
 
     block-size: 100%;
     inline-size: 100%;
-    
+
     display: grid;
-    gap: var(--size-2);
+    gap: var(--size-3);
     grid-auto-flow: column;
-    grid-auto-columns: 20dvw;
-    
+    grid-auto-columns: 50dvw;
+
     overflow-x: scroll;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scroll-marker-group: after;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
 }
 
+.carousel__slides::-webkit-scrollbar {
+    block-size: 0.5rem;
+}
+
+.carousel__slides::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: var(--radius-round);
+}
+
+.carousel__slides::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* ---------- prev / next buttons ---------- */
 
 .carousel__slides::scroll-button(inline-start),
 .carousel__slides::scroll-button(inline-end) {
     align-self: center;
 
+    display: grid;
+    place-items: center;
+
     width: 3rem;
     aspect-ratio: 1;
     opacity: 1;
 
-    font-size: 2vw;
+    font-size: var(--font-size-3);
 
     border-radius: 100%;
-    border: none;
-    background: var(--blue-3);
+    border: 2px solid var(--accent);
+    background: oklch(from var(--accent) calc(l * 0.32) c h);
+
+    color: var(--accent);
+
+    transition:
+        scale 0.2s var(--ease-out-3),
+        background 0.2s var(--ease-out-3),
+        color 0.2s var(--ease-out-3),
+        border-color 0.2s var(--ease-out-3);
 }
 
 .carousel__slides::scroll-button(inline-start):focus-visible,
 .carousel__slides::scroll-button(inline-end):focus-visible {
-    outline: 2px solid var(--blue-6);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
 }
 
 .carousel__slides::scroll-button(inline-start):enabled:hover,
 .carousel__slides::scroll-button(inline-end):enabled:hover {
     cursor: pointer;
-    background: var(--blue-4);
-    scale: 1.05;
+    background: var(--accent);
+    border-color: transparent;
+    color: var(--gray-12);
+    scale: 1.1;
 }
-
 
 .carousel__slides::scroll-button(inline-start):enabled:active,
 .carousel__slides::scroll-button(inline-end):enabled:active {
     scale: 0.95;
 }
 
+.carousel__slides::scroll-button(*):disabled {
+    scale: 0.85;
+    opacity: 0.25;
+}
 
 .carousel__slides::scroll-button(inline-start) {
     grid-area: prev;
@@ -87,6 +132,8 @@
     justify-self: end;
 }
 
+/* ---------- marker group (dots) ---------- */
+
 .carousel__slides::scroll-marker-group {
     display: grid;
     grid-auto-flow: column;
@@ -94,7 +141,7 @@
     gap: var(--size-2);
 
     grid-area: markers;
-    
+
     justify-self: center;
     inline-size: 100%;
     align-items: center;
@@ -102,9 +149,43 @@
     height: 3rem;
 
     padding: var(--size-3);
-    border: 1px solid var(--gray-7);
+    background: color-mix(in oklab, var(--gray-11) 55%, transparent);
+    border: 1px solid var(--gray-9);
     border-radius: var(--radius-round);
 }
+
+.slide::scroll-marker {
+    content: "";
+    aspect-ratio: 1;
+
+    border: 2px solid color-mix(in oklab, var(--accent) 45%, var(--gray-8));
+    border-radius: var(--radius-round);
+
+    transition:
+        scale 0.2s var(--ease-out-3),
+        background 0.2s var(--ease-out-3),
+        border-color 0.2s var(--ease-out-3);
+}
+
+.slide::scroll-marker:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.slide::scroll-marker:hover {
+    cursor: pointer;
+    scale: 1.2;
+    border-color: var(--accent);
+}
+
+.slide::scroll-marker:active,
+.slide::scroll-marker:target-current {
+    scale: 1.2;
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+/* ---------- slides ---------- */
 
 .slide {
     block-size: 100%;
@@ -116,31 +197,11 @@
 
     scroll-snap-align: end;
 
-    background: Var(--indigo-2);
+    border-radius: var(--radius-4);
+    border: 1px solid oklch(from var(--accent) calc(l * 0.5) c h);
+    background: oklch(from var(--accent) calc(l * 0.28) c h);
 
-    color: var(--gray-10);
+    color: var(--accent);
     font-size: var(--font-size-fluid-2);
-}
-
-.slide::scroll-marker {
-    content: "";
-    border: 2px solid var(--blue-5);
-    aspect-ratio: 1;
-    border-radius: var(--radius-round);
-}
-
-.slide::scroll-marker:focus-visible {
-    outline: 2px solid var(--blue-6);
-    outline-offset: 2px;
-}
-
-.slide::scroll-marker:hover {
-    outline: 2px solid var(--blue-6);
-    outline-offset: 2px;
-    scale: 1.1;
-}
-
-.slide::scroll-marker:active,
-.slide::scroll-marker:target-current {
-    background: var(--blue-6);
+    font-weight: var(--font-weight-8);
 }

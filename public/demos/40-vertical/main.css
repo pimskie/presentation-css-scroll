@@ -29,11 +29,21 @@ body {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
 
-    scrollbar-width: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
 }
 
 .sections::-webkit-scrollbar {
-    inline-size: 0;
+    inline-size: 0.5rem;
+}
+
+.sections::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: var(--radius-round);
+}
+
+.sections::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 /* ---------- sticky pill navigation (the scroll markers) ---------- */
@@ -191,6 +201,6 @@ body {
 
 /* sections you've already passed shrink back a touch */
 .section::scroll-marker:target-before:not(:hover) {
-    scale: 0.88;
     color: var(--gray-6);
+    text-decoration: line-through;
 }

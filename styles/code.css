@@ -1,4 +1,4 @@
-/* code blocks — gruvbox colors on ink, honey hairline on top */
+/* code blocks — high-contrast syntax on ink, honey hairline on top */
 
 .slidev-layout pre.shiki,
 .slidev-layout .slidev-code {
@@ -29,5 +29,5 @@
 
 .slidev-layout .slidev-code .line.dishonored,
 .slidev-layout .slidev-code .dishonored {
-  opacity: 0.35;
+  opacity: 0.55;
 }

@@ -9,6 +9,40 @@
 </head>
 <body>
     <div class="container">
+        <div class="controls-bar">
+            <div class="controls">
+                <span class="controls__label">scroll-snap-align</span>
+                <div class="segmented" role="radiogroup" aria-label="scroll-snap-align">
+                    <label class="segmented__option">
+                        <input type="radio" name="align" value="start" checked>
+                        <span>start</span>
+                    </label>
+                    <label class="segmented__option">
+                        <input type="radio" name="align" value="center">
+                        <span>center</span>
+                    </label>
+                    <label class="segmented__option">
+                        <input type="radio" name="align" value="end">
+                        <span>end</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="controls">
+                <span class="controls__label">scroll-snap-type</span>
+                <div class="segmented" role="radiogroup" aria-label="scroll-snap-type">
+                    <label class="segmented__option">
+                        <input type="radio" name="snaptype" value="mandatory" checked>
+                        <span>mandatory</span>
+                    </label>
+                    <label class="segmented__option">
+                        <input type="radio" name="snaptype" value="proximity">
+                        <span>proximity</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
         <div class="carousel">
            <div class="carousel__slides">
                 <div class="slide">1</div>
