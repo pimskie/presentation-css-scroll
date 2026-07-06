@@ -1,0 +1,36 @@
+{
+  "name": "slidev-theme-pimskie-dev",
+  "version": "0.1.0",
+  "description": "Dark Slidev theme — black & stinger yellow, bold condensed type, honeycomb details. Protect ya deck.",
+  "keywords": [
+    "slidev-theme",
+    "slidev",
+    "dark",
+    "theme"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "slidev": ">=0.50.0"
+  },
+  "scripts": {
+    "dev": "slidev --open",
+    "build": "slidev build",
+    "export": "slidev export"
+  },
+  "slidev": {
+    "colorSchema": "dark",
+    "highlighter": "shiki",
+    "defaults": {
+      "fonts": {
+        "sans": "Archivo",
+        "serif": "Archivo",
+        "mono": "JetBrains Mono"
+      }
+    }
+  },
+  "devDependencies": {
+    "@slidev/cli": "^52.0.0",
+    "@slidev/types": "^52.0.0"
+  }
+}

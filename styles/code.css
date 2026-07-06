@@ -1,0 +1,33 @@
+/* code blocks — gruvbox colors on ink, honey hairline on top */
+
+.slidev-layout pre.shiki,
+.slidev-layout .slidev-code {
+  background: var(--kb-ink) !important;
+  border: 1px solid var(--kb-line);
+  border-top: 3px solid var(--kb-honey);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  font-size: 0.92em;
+  line-height: 1.65;
+}
+
+/* inline code */
+.slidev-layout :not(pre) > code {
+  background: var(--kb-ink);
+  color: var(--kb-honey);
+  border: 1px solid var(--kb-line);
+  border-radius: 0.3rem;
+  padding: 0.1em 0.4em;
+  font-size: 0.88em;
+}
+
+/* line highlighting */
+.slidev-layout .slidev-code .highlighted,
+.slidev-layout .slidev-code .line.highlighted {
+  background: color-mix(in srgb, var(--kb-honey) 12%, transparent);
+}
+
+.slidev-layout .slidev-code .line.dishonored,
+.slidev-layout .slidev-code .dishonored {
+  opacity: 0.35;
+}
