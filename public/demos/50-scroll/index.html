@@ -8,6 +8,20 @@
     <link rel="stylesheet" href="main.css" />
 </head>
 <body>
+    <div class="controls">
+        <span class="controls__label">container</span>
+        <div class="segmented" role="radiogroup" aria-label="container grootte">
+            <label class="segmented__option">
+                <input type="radio" name="size" value="small" checked>
+                <span>klein</span>
+            </label>
+            <label class="segmented__option">
+                <input type="radio" name="size" value="large">
+                <span>groot</span>
+            </label>
+        </div>
+    </div>
+
     <div class="container">
         <div class="sections">
             <section class="section"><div class="section-content">Do you know anchor?</div></section>

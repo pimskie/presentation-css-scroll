@@ -8,15 +8,86 @@
 }
 
 body {
+    --carousel-width: 40cqw;
+
     margin: 0;
     background: var(--gray-12);
 }
 
 .container {
-    inline-size: min(100%, 80cqi);
+    container-type: inline-size;
+    container-name: carousel;
+
+    inline-size: var(--carousel-width);
     block-size: min(80svh, 30cqi);
 
     margin-inline: auto;
+
+    transition: inline-size 0.4s var(--ease-out-3);
+}
+
+/* the toggle shrinks the container — the slides reflow via @container */
+body:has(input[value="large"]:checked) .container {
+    --carousel-width: 80dvw;
+}
+
+/* ---------- controls (pure CSS, no JS) ---------- */
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-2);
+
+    padding-block: var(--size-3);
+
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+}
+
+.controls__label {
+    color: var(--gray-5);
+}
+
+.segmented {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+
+    background: var(--gray-11);
+    border: 1px solid var(--gray-9);
+    border-radius: var(--radius-round);
+}
+
+.segmented__option {
+    position: relative;
+    padding: 0.2em 0.7em;
+
+    color: var(--gray-3);
+    cursor: pointer;
+    user-select: none;
+
+    border-radius: var(--radius-round);
+    transition: background 0.2s, color 0.2s;
+}
+
+.segmented__option input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.segmented__option:has(input:checked) {
+    background: var(--accent);
+    color: var(--gray-12);
+    font-weight: var(--font-weight-7);
+}
+
+.segmented__option:has(input:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
 .sections {
@@ -27,6 +98,8 @@ body {
     anchor-name: --anchor-carousel;
 
     block-size: 70dvh;
+    inline-size: 100cqi;
+    margin-inline: auto;
 
     display: grid;
     grid-auto-flow: column;
@@ -39,7 +112,7 @@ body {
     scroll-behavior: smooth;
 
     scrollbar-width: thin;
-    scrollbar-color: var(--accent) transparent;
+    scrollbar-color: oklch(from var(--accent) calc(l * 0.55) c h) transparent;
 }
 
 .sections::-webkit-scrollbar {
@@ -47,7 +120,7 @@ body {
 }
 
 .sections::-webkit-scrollbar-thumb {
-    background: var(--accent);
+    background: oklch(from var(--accent) calc(l * 0.55) c h);
     border-radius: var(--radius-round);
 }
 
@@ -117,7 +190,9 @@ body {
     container-type: scroll-state;
     container-name: snap-container;
 
-    inline-size: 50cqi;
+    /* width is a fraction of the .container size-container →
+       ~3 slides in view (33cqi) when the container is large */
+    inline-size: 80cqi;
 
     display: grid;
     place-items: stretch;
@@ -125,6 +200,14 @@ body {
 
     scroll-snap-align: center;
 }
+
+/* small container → wider slides, so ~1.5 are in view */
+@container carousel (width > 70vw) {
+    .section {
+        inline-size: 40cqi;
+    }
+}
+
 
 .section-content {
     display: grid;
@@ -157,8 +240,9 @@ body {
 /* everything else recedes gently */
 @container snap-container not scroll-state(snapped: inline) {
     .section-content {
+        opacity: 0.9;
         translate: 0 2rem;
-        scale: 0.95;
+        scale: 0.9;
         opacity: 0.65;
     }
 }

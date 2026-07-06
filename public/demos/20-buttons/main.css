@@ -46,7 +46,7 @@ body {
     scroll-behavior: smooth;
 
     scrollbar-width: thin;
-    scrollbar-color: var(--accent) transparent;
+    scrollbar-color: oklch(from var(--accent) calc(l * 0.55) c h) transparent;
 }
 
 .carousel__slides::-webkit-scrollbar {
@@ -54,7 +54,7 @@ body {
 }
 
 .carousel__slides::-webkit-scrollbar-thumb {
-    background: var(--accent);
+    background: oklch(from var(--accent) calc(l * 0.55) c h);
     border-radius: var(--radius-round);
 }
 
@@ -134,9 +134,9 @@ body {
 
     border-radius: var(--radius-4);
     border: 1px solid oklch(from var(--accent) calc(l * 0.5) c h);
-    background: oklch(from var(--accent) calc(l * 0.28) c h);
+    background: var(--accent);
 
-    color: var(--accent);
+    color: oklch(from var(--accent) calc(l * 0.28) c h);
     font-size: var(--font-size-fluid-2);
     font-weight: var(--font-weight-8);
 }

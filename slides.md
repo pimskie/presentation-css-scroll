@@ -266,9 +266,10 @@ Container queries voor je scroll-status
 ```css {1-3|5-10|all}
 .section {
   container-type: scroll-state;
+  container-name: carousel;
 }
 
-@container not scroll-state(snapped: inline) {
+@container carousel not scroll-state(snapped: inline) {
   .section-content {
     translate: 0 6rem;
     opacity: 0.4;
@@ -276,9 +277,8 @@ Container queries voor je scroll-status
 }
 ```
 
-Elke slide is z'n eigen container en **weet of hij gesnapt is**. Niet-actieve slides zakken weg en dimmen — puur met een transition.
-
-Er is meer dan `snapped`: ook `scrollable` (kan ik nog ergens heen?) en `stuck` (is m'n sticky element vastgeplakt?).
+Elke slide is z'n eigen container en **weet of hij gesnapt is**. Niet-actieve slides zakken weg en dimmen .
+Naast `snapped`: ook `scrollable` (kan ik nog ergens heen?) en `stuck` (is m'n sticky element vastgeplakt?).
 
 <!--
 Dit verving vroeger een IntersectionObserver + class toggle. Nu: container query op scroll-status. snapped / scrollable / stuck zijn de drie smaken.
@@ -306,20 +306,21 @@ DEMO: scroll — content van de gesnapte slide komt omhoog, de rest ligt verzonk
 
 <hr>
 
-**Progressive enhancement by design**: zonder support is het gewoon een nette, scrollbare, snappende lijst. Niks breekt — je knoppen en dots verschijnen zodra de browser het kan.
+**Progressive enhancement by design**
 
 <!--
 Firefox en Safari hebben publiekelijk interesse getoond; het zit in de CSS Overflow spec. Voor productie: prima als enhancement, JS-fallback alleen als knoppen/dots kritisch zijn.
 -->
 
+---
 
 # Bronnen
 
-- [MDN — CSS carousels guide](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Overflow/Carousels)
-- [Chrome blog — Carousels with CSS](https://developer.chrome.com/blog/carousels-with-css)
-- [chrome.dev — carousel gallery](https://chrome.dev/carousel/horizontal/curved/) — configurator met copy-paste CSS
-- [utilitybend — Love at first slide](https://utilitybend.com/blog/love-at-first-slide-creating-a-carousel-purely-out-of-css/)
-- [MDN — `::scroll-button()`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::scroll-button) · [`::scroll-marker`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::scroll-marker) · [`:target-current`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:target-current)
+- [MDN - CSS carousels guide](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Overflow/Carousels)
+- [Chrome blog - Carousels with CSS](https://developer.chrome.com/blog/carousels-with-css)
+- [chrome.dev - carousel gallery](https://chrome.dev/carousel/horizontal/curved/)
+- [utilitybend - Love at first slide](https://utilitybend.com/blog/love-at-first-slide-creating-a-carousel-purely-out-of-css/)
+- [MDN - `::scroll-button()`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::scroll-button) · [`::scroll-marker`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::scroll-marker) · [`:target-current`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:target-current)
 
 ---
 layout: section

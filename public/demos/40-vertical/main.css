@@ -72,10 +72,8 @@ body {
         scale 0.3s var(--ease-3);
 }
 
-/* dim the nav once you've scrolled away from the top */
 @container sections scroll-state(scrollable: top) {
     .sections::scroll-marker-group:not(:hover) {
-        opacity: 0.55;
         scale: 0.96;
     }
 }
