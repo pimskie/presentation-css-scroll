@@ -8,7 +8,7 @@ layout: cover
 
 # Scroll? Snap!
 
-CSS-only carousels met: <br /> `::scroll-button`, `::scroll-marker` en `scroll-state()`
+CSS-only carousels met: <br /> `::scroll-button`, `::scroll-marker-group`, `::scroll-marker` en `scroll-state()`
 
 
 <!--
@@ -35,7 +35,8 @@ Herkenbaar: elke library lost hetzelfde op — scroll-positie bijhouden, knoppen
 
 1. `scroll-snap`: "snappen" naar een element
 2. `::scroll-button()`: de vorige / volgende _buttons_
-3. `::scroll-marker`: slide markers met active state
+3. `::scroll-marker-group`: waar de "dots" in geplaatst worden
+4. `::scroll-marker`: slide "dots" met active state
 5. `scroll-state()`: reageren op wat de scroll status is
 
 Alle demo's staan in m'n [experiments repo](https://github.com/pimskie/experiments/tree/main/css-stuff/carousel).
@@ -321,6 +322,15 @@ Firefox en Safari hebben publiekelijk interesse getoond; het zit in de CSS Overf
 - [chrome.dev - carousel gallery](https://chrome.dev/carousel/horizontal/curved/)
 - [utilitybend - Love at first slide](https://utilitybend.com/blog/love-at-first-slide-creating-a-carousel-purely-out-of-css/)
 - [MDN - `::scroll-button()`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::scroll-button) · [`::scroll-marker`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::scroll-marker) · [`:target-current`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:target-current)
+
+---
+
+# What's next?
+
+ - View Transition API?
+ - De kracht van native elements?
+ - CSS if/else?
+
 
 ---
 layout: section
