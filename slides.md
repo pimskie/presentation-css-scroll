@@ -108,7 +108,7 @@ Vorige / vorige, zonder event listeners en werkt out of the box
 }
 
 .carousel::scroll-button(*) {
-  width: 3rem;
+  inline-size: 3rem;
   aspect-ratio: 1;
   border-radius: 100%;
 }
@@ -142,6 +142,8 @@ Pseudo-elementen op de scroller, met content erin. Het zijn ECHTE buttons: klik 
 .carousel::scroll-button(inline-start) {
  position-anchor: --carousel;
  position-area: inline-start;
+
+ grid-template-area: prev;
 }
 
 ```
@@ -170,14 +172,16 @@ Dots met active state
 
 # Elke slide een marker
 
-```css {1-3|5-10|12-14|all}
+```css {1-3|5-12|12-14|all}
 .carousel {
   scroll-marker-group: after;
 }
 
 .slide::scroll-marker {
   content: '';
+  inline-size: 1rem;
   aspect-ratio: 1;
+
   border: 2px solid var(--blue-5);
   border-radius: 50%;
 }
@@ -208,6 +212,50 @@ layout: section
 ---
 
 <div class="kicker">Deel 04</div>
+
+# `scroll-state()`
+
+Container queries voor je scroll-status
+
+---
+
+# Reageren op snappen
+
+```css {1-3|5-10|all}
+.section {
+  container-type: scroll-state;
+  container-name: carousel;
+}
+
+@container carousel not scroll-state(snapped: inline) {
+  .section-content {
+    translate: 0 6rem;
+    opacity: 0.4;
+  }
+}
+```
+
+Elke slide is z'n eigen container en **weet of hij gesnapt is**. Niet-actieve slides zakken weg en dimmen .
+Naast `snapped`: ook `scrollable` (kan ik nog ergens heen?) en `stuck` (is m'n sticky element vastgeplakt?).
+
+<!--
+Dit verving vroeger een IntersectionObserver + class toggle. Nu: container query op scroll-status. snapped / scrollable / stuck zijn de drie smaken.
+-->
+
+---
+layout: iframe-unscaled
+url: /demos/50-scroll/index.html
+---
+
+<!--
+DEMO: scroll — content van de gesnapte slide komt omhoog, de rest ligt verzonken. Knoppen zweven naast de carousel via anchor positioning. Alles wat we zagen komt hier samen: snap + buttons + markers + scroll-state.
+-->
+
+---
+layout: section
+---
+
+<div class="kicker">Deel 05</div>
 
 # One pager carousel
 
@@ -248,51 +296,7 @@ url: /demos/40-vertical/index.html
 ---
 
 <!--
-DEMO: scroll door de secties — de nav bovenaan loopt mee, gepasseerde labels krimpen. Klik op een label: smooth scroll ernaartoe. En na het scrollen dimt de hele nav (dat is al scroll-state — bruggetje naar deel 05).
--->
-
----
-layout: section
----
-
-<div class="kicker">Deel 05</div>
-
-# `scroll-state()`
-
-Container queries voor je scroll-status
-
----
-
-# Reageren op snappen
-
-```css {1-3|5-10|all}
-.section {
-  container-type: scroll-state;
-  container-name: carousel;
-}
-
-@container carousel not scroll-state(snapped: inline) {
-  .section-content {
-    translate: 0 6rem;
-    opacity: 0.4;
-  }
-}
-```
-
-Elke slide is z'n eigen container en **weet of hij gesnapt is**. Niet-actieve slides zakken weg en dimmen .
-Naast `snapped`: ook `scrollable` (kan ik nog ergens heen?) en `stuck` (is m'n sticky element vastgeplakt?).
-
-<!--
-Dit verving vroeger een IntersectionObserver + class toggle. Nu: container query op scroll-status. snapped / scrollable / stuck zijn de drie smaken.
--->
-
----
-layout: iframe-unscaled
-url: /demos/50-scroll/index.html
----
-
-<!--
-DEMO: scroll — content van de gesnapte slide komt omhoog, de rest ligt verzonken. Knoppen zweven naast de carousel via anchor positioning. Alles wat we zagen komt hier samen: snap + buttons + markers + scroll-state.
+DEMO: scroll door de secties — de nav bovenaan loopt mee, gepasseerde labels krimpen. Klik op een label: smooth scroll ernaartoe. De nav dimt tijdens het scrollen — dat is scroll-state in actie.
 -->
 
 ---
