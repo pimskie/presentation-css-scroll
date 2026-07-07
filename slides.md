@@ -334,7 +334,8 @@ Firefox en Safari hebben publiekelijk interesse getoond; het zit in de CSS Overf
 
  - View Transition API?
  - De kracht van native elements?
- - CSS if/else?
+ - PWA's?
+ - Container queries?
 
 
 ---
