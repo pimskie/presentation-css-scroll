@@ -74,11 +74,9 @@ body {
 
 @container sections scroll-state(scrollable: top) {
     .sections::scroll-marker-group:not(:hover) {
-        scale: 0.96;
+        scale: 0.9;
     }
 }
-
-/* ---------- the pages ---------- */
 
 .section {
     scroll-snap-align: start;
@@ -166,14 +164,12 @@ body {
     border-radius: var(--radius-2);
 }
 
-/* ---------- marker labels ---------- */
-
 .section::scroll-marker {
     content: attr(data-title);
 
     padding: var(--size-2) var(--size-3);
 
-    font-size: var(--font-size-0);
+    font-size: var(--font-size-1);
     font-weight: var(--font-weight-6);
     color: var(--gray-4);
     text-decoration: none;
@@ -197,7 +193,6 @@ body {
     background: var(--accent);
 }
 
-/* sections you've already passed shrink back a touch */
 .section::scroll-marker:target-before:not(:hover) {
     color: var(--gray-6);
     text-decoration: line-through;

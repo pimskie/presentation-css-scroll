@@ -19,11 +19,10 @@ Native carousels in de browser. Vijf demo's, van basis snap tot scroll-state con
 
 # Waarom
 
-- Omdat het cool is en omdat het (bijna) kan
-- Geen **~40 kB** JavaScript voor iets dat scrollt
-- A11Y out of the box
+- Het is cool!
+- Je krijgt alles gratis, A11Y by default
 - Keyboard en focus navigatie
-- Geen resize observers, re-inits of gekke dingen nodig
+- Geen **~40 kB** JavaScript voor iets dat scrollt
 
 <!--
 Herkenbaar: elke library lost hetzelfde op — scroll-positie bijhouden, knoppen, dots, active state. Dat is precies wat de browser nu native doet.
@@ -169,7 +168,7 @@ Dots met active state
 
 ---
 
-# Eén property, één pseudo
+# Elke slide een marker
 
 ```css {1-3|5-10|12-14|all}
 .carousel {
@@ -188,7 +187,8 @@ Dots met active state
 }
 ```
 
-`scroll-marker-group: after` maakt de container, elke slide levert z'n eigen marker en `:target-current` matcht de dot van de slide die nu in beeld is.
+`scroll-marker-group: after` maakt de "marker conatiner". <br />
+Elke slide krijgt z'n eigen marker. `:target-current` matcht de marker van de slide die actief is.
 
 <!--
 Markers gedragen zich als anchor-links naar hun slide. :target-current is de "active dot" waar je normaal een IntersectionObserver voor schrijft.
@@ -216,6 +216,7 @@ layout: section
 # Fullpage-navigatie van je section-titels
 
 ```css {1-3|5-9|11-13|15-17|all}
+/* <div class="section" data-title="about"> */
 .section::scroll-marker {
   content: attr(data-title);
 }

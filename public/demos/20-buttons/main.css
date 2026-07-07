@@ -40,6 +40,9 @@ body {
     grid-auto-flow: column;
     grid-auto-columns: 30dvw;
 
+    /* keep the scrollbar clear of the slides */
+    padding-block-end: var(--size-4);
+
     overflow-x: scroll;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
